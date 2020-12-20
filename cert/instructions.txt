@@ -1,0 +1,4 @@
+Copy below files to this folder from private folder:
+ - sv-aws-cert.cer
+ - sv-aws-private-key.pem
+ - sv-aws-public-key-kg.pub

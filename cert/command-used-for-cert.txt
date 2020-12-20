@@ -1,0 +1,20 @@
+refer create-ssl.sh in project
+
+# Start git console
+# go to specific folder, for ssl.conf - refer in files
+# MSYS_NO_PATHCONV is for git to avoid path conversion on windows
+
+export MSYS_NO_PATHCONV=1
+
+openssl req -x509 -newkey rsa:4096 -keyout sv-aws-key-private.pem -out sv-aws-cert.pem -days 365 -nodes -subj "/C=GB/ST=SY/L=Sheffield/O=SV/O=AWS/CN=SV AWS" -config ssl.conf 
+
+openssl genrsa -out sv-aws-private-key.pem 4096
+openssl rsa -in sv-aws-private-key.pem -pubout > sv-aws-public-key.pub
+openssl req -new -x509 -key sv-aws-private-key.pem -days 325 -sha256 -config ssl.conf -subj "/C=GB/ST=SY/L=Sheffield/O=SV/O=AWS/CN=SV AWS" -out sv-aws-cert.cer 
+
+# once you are out of shell this variable will be unset
+
+# Generate public key
+ssh-keygen -y -f /d/aws/sv-aws-key-private.pem > /d/aws/sv-aws-key-public.pub
+
+# Use puttykeygen to convert private key to ppk file 
